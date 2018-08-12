@@ -42,14 +42,13 @@ void parse::reading_parsing_file(){
     fread(&common,1,sizeof(struct common_attribute),this->fp);
     while(common.attribute_type_id!=0){
         switch (common.attribute_type_id){
-            case STANDARD_INFORMATION:
+            case STANDARD_INFORMATION: //go function
                 struct standard_info_attribute standard;
                 fread(&standard,1,sizeof(standard_info_attribute),this->fp);
                 fseek(this->fp,common.length_of_attribute-(sizeof(standard_info_attribute)+sizeof(common_attribute)),SEEK_CUR);
                 fread(&common,1,sizeof(common_attribute),this->fp);
                 break;
             case ATTRIBUTE_LIST:
-
                 break;
             case FILE_NAME :
                 struct filename_attirbute filename;
@@ -77,20 +76,21 @@ void parse::reading_parsing_file(){
                         }
                         break;
                     case NON_RESIDENT:{
-                        struct non_resident_header non_resident;
-                        fread(&non_resident,1,sizeof(non_resident_header),this->fp);
-                        fread(&temp,1,1,this->fp);
-                        int offset = temp >> 4;
-                        int length = temp-((temp >> 4) << 4);
-                        cout<< offset << " " << length <<endl;
+                            struct non_resident_header non_resident;
+                            fread(&non_resident,1,sizeof(non_resident_header),this->fp);
+                            fread(&temp,1,1,this->fp);
+                            int offset = temp >> 4;
+                            int length = temp-((temp >> 4) << 4);
 
-                        off_data = new uint8_t[offset];
-                        len_data = new uint8_t[length];
-                        fread(len_data,1,static_cast<size_t>(length),this->fp);
-                        fread(off_data,1,static_cast<size_t>(offset),this->fp);
-
-                        delete [] off_data;
-                        delete [] len_data;
+                            off_data = new uint8_t[offset];
+                            len_data = new uint8_t[length+1];
+                            fread(len_data,1,static_cast<size_t>(length+1),this->fp);
+                            fread(off_data,1,static_cast<size_t>(offset),this->fp);
+                            if(off_data[length]==0x00){
+                                delete [] off_data;
+                                delete [] len_data;
+                                break;
+                            }
                         }
                         break;
                     default:

@@ -116,6 +116,29 @@ struct non_resident_header{ //data attribute
     uint64_t real_size_of_attribute_content;
     uint64_t initialized_size_of_attribute_content;
 };
+struct index_root_header{
+    uint32_t attribute_type;
+    uint32_t collation_rule;
+    uint32_t size_of_index_record;
+    uint8_t cluster_num_of_index_record;
+    uint8_t reserved[3];//padding
+    uint8_t *index_node_header;//always different
+};
+struct index_node_header{
+    uint32_t offset_to_first_index_entry;
+    uint32_t total_sizeo_of_index_entries;
+    uint32_t allocated_size_of_index_record;
+    uint32_t flags;
+};
+struct index_entry_header{
+    uint64_t file_reference_address_for_filename;
+    uint16_t length_of_index_entry;
+    uint16_t length_of_filename;
+    uint32_t flags;
+    uint8_t *filename; //always different
+    uint64_t vcn; //last 8bytes
+};
+
 #pragma pack(pop)
 #endif // NTFS_HEADER_H
 
