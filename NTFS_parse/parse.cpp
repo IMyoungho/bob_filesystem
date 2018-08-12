@@ -27,6 +27,8 @@ void parse::file_open_check(){
 
 void parse::reading_parsing_file(){
     uint8_t temp;
+    uint8_t *off_data;
+    uint8_t *len_data;
     struct ntfs_struct ntfs_h;
     fread(&ntfs_h,1,sizeof(ntfs_struct),this->fp);
     cout << "ntfs data copy finish!!" << endl;
@@ -82,13 +84,13 @@ void parse::reading_parsing_file(){
                         int length = temp-((temp >> 4) << 4);
                         cout<< offset << " " << length <<endl;
 
-                        uint8_t *off = new uint8_t[offset];
-                        uint8_t *len = new uint8_t[length];
-                        fread(len,1,static_cast<size_t>(length),this->fp);
-                        fread(off,1,static_cast<size_t>(offset),this->fp);
+                        off_data = new uint8_t[offset];
+                        len_data = new uint8_t[length];
+                        fread(len_data,1,static_cast<size_t>(length),this->fp);
+                        fread(off_data,1,static_cast<size_t>(offset),this->fp);
 
-                        delete [] off;
-                        delete [] len;
+                        delete [] off_data;
+                        delete [] len_data;
                         }
                         break;
                     default:
