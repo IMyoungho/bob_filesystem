@@ -52,7 +52,7 @@ void parse::attribute_parsing(struct common_attribute common){
     fread(&common,1,sizeof(struct common_attribute),this->fp);
     while(common.attribute_type_id!=0){
         switch (common.attribute_type_id){
-            case STANDARD_INFORMATION: //go function
+            case STANDARD_INFORMATION: //make function (57~59, 65~67)
                 struct standard_info_attribute standard;
                 fread(&standard,1,sizeof(standard_info_attribute),this->fp);
                 fseek(this->fp,common.length_of_attribute-(sizeof(standard_info_attribute)+sizeof(common_attribute)),SEEK_CUR);
