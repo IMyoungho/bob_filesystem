@@ -4,7 +4,6 @@ parse::parse(int argc, char*argv[]){
     check_argc(argc,argv);
 }
 
-
 void parse::check_argc(int argc, char* argv[]){
     if(argc!=2){
         cout << " < Usage > : < File path > " << endl;
@@ -13,7 +12,6 @@ void parse::check_argc(int argc, char* argv[]){
     this->file_path=argv[1];
     file_open_check();
 }
-
 
 void parse::file_open_check(){
     this->fp = fopen(this->file_path,"rb");
