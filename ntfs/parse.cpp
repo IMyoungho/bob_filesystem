@@ -90,8 +90,8 @@ void parse::mft_entry_parsing(int jump_offset){
                             this->temp-=sizeof(struct common_attribute); //Runlist offset 기준이 Data attribute 처음 기준이니까
                             this->temp+=n_resi_h->offset_to_the_runlist+this->jump_box;//지나온 runlist는 건너뜀
                             //jump_box를 쓰지않으면 this->temp가 재귀함수호출로 인하여 제대로 jump_runlist만큼 jump할 수 없음
-
-//                            this->show_data(this->temp,30); //temp
+                            
+                            this->show_data(this->temp,30); //temp
 
                             memcpy(&cal_temp, this->temp,1);
                             this->offset = cal_temp >> 4;
