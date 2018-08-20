@@ -7,7 +7,7 @@ parse::parse(int argc, char*argv[]){
 
 void parse::check_argc(int argc, char* argv[]){
     if(argc!=2){
-        cout << " <Usage> : <File path> " <<endl;
+        cout << " < Usage > : < File path > " << endl;
         exit(0);
     }
     this->file_path=argv[1];
